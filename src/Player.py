@@ -56,4 +56,3 @@ class Player:
 
     def set_last(self, new_msg):
         self._last_msg = new_msg
-        
