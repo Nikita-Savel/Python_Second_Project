@@ -77,3 +77,9 @@ python3 Tic-Tac-Toe/Main.py
   - **/exit** &mdash; выйти из игры
   - **/commands** &mdash; доступные команды
 
+### Игровое поле в процессе (остальные фотографии находятся в папке data/images):
+
+<p align="center">
+  <img src="https://github.com/Nikita-Savel/Python_Second_Project/blob/development/data/images/FirstMove.png" width="400" height="500"/>
+  <img src="https://github.com/Nikita-Savel/Python_Second_Project/blob/development/data/images/GameProcess.png" width="400" height="500"/>
+</p>
