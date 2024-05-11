@@ -1,6 +1,5 @@
-from src.Player import Player
-from src.Field import Field
-
+from Player import Player
+from Field import Field
 from aiogram import Bot, Dispatcher, executor, types
 
 class Game:
@@ -22,7 +21,7 @@ class Game:
 
     def get_cell_image(self, x, y):
         return self._field.get_cell_image(x, y)
-    
+
     def check_end(self):
         temp = []
         for i in range(self._field.get_size()):
@@ -56,15 +55,15 @@ class Game:
                 if temp[i][j] == 'empty':
                    return 'game'
         return 'draw'
-        
+
     def process_press(self, x, y, player):
         if (player == self._player1 and self._turn == 2) or \
               (player == self._player2 and self._turn == 1):
-            return 'Не твой ход'
-          
+            return 'Сейчас не твой ход'
+
         if self._field.get_cell_status(x, y) != 'empty':
-            return 'Пчел тут занято'
-        
+            return 'Клетка уже занята'
+
         try:
             self.step(x, y, player)
         except:

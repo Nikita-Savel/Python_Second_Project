@@ -1,15 +1,15 @@
 from aiogram import Bot, Dispatcher, executor, types
-from src.Game import Game
-from src.Player import Player
+from Game import Game
+from Player import Player
 import random
-from src import Globals
+import Globals
 import emoji
 from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 from sys import argv
 
-script, token  = argv
+script, token = argv
 Globals.API_TOKEN = token
 
 bot = Bot(token=Globals.API_TOKEN)
@@ -143,7 +143,7 @@ async def send_welcome(message: types.Message):
     await set_buttons(curr_id, Globals.btn_new_game, Globals.cmd_welcome)
     print("Игрок " + str(curr_id) + " зарегистрировался")
     new_player = Player(curr_id, curr_name)
-    with open('src/data.txt', 'a') as f:
+    with open('../extensions/data.txt', 'a') as f:
         f.write(str(curr_id) + '^' + curr_name + '\n')
     Globals.all_players.append(new_player)
     Globals.all_ides.update([(curr_id, new_player)])
@@ -221,13 +221,14 @@ async def process_callback(callback_query: types.CallbackQuery):
     game = player.get_game()
     result = game.process_press(x, y, player)
     if result == 'ok':
+
         opponent = Globals.all_ides[player.get_opponent()]
         await update_field(player, opponent, game)
         return
-    if result == 'Не твой ход':
+    if result == 'Сейчас не твой ход':
         await only_exit(curr_id, Globals.msg_not_your_turn)
         return
-    if result == 'Пчел тут занято':
+    if result == 'Клетка уже занята':
         await only_exit(curr_id, Globals.msg_busy_cell)
         return
     if result == 'win':
@@ -236,7 +237,6 @@ async def process_callback(callback_query: types.CallbackQuery):
     if result == 'draw':
         await draw_game(curr_id, Globals.all_ides[curr_id].get_opponent())
         return
-    
     await bot.send_message(curr_id, Globals.msg_what)
     return
 
@@ -263,19 +263,17 @@ async def exit(message: types.Message):
         Globals.all_ides[our_id].destruct()
         await set_buttons(our_id, Globals.btn_new_game,  Globals.msg_end_game)
 
-
 @dp.message_handler(commands=['help'])
 async def help_msg(message: types.Message):
     await message.answer(Globals.cmd_help)
-    
+
 @dp.message_handler(commands=['info'])
 async def help_msg(message: types.Message):
     await message.answer(Globals.cmd_info)
-    
+
 @dp.message_handler(commands=['commands'])
 async def help_msg(message: types.Message):
     await message.answer(Globals.cmd_commands)
-    
 
 @dp.message_handler()
 async def messages(message: types.Message):
@@ -298,8 +296,6 @@ async def messages(message: types.Message):
     if message.text.isdigit():
         await get_id(message, int(message.text))
         return
-    
-    
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)

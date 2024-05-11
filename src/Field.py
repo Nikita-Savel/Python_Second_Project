@@ -1,6 +1,5 @@
-from src.Cell import Cell
-from src import Globals
-
+from Cell import Cell
+import Globals
 
 class Field:
     def __init__(self, sz=3):
