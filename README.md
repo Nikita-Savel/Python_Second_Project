@@ -68,7 +68,7 @@ pip install -r Tic-Tac-Toe/requirements.txt
 ```
 - Запуск файла:
 ```
-python3 Tic-Tac-Toe/Main.py
+python3 Tic-Tac-Toe/Main.py {BOT API}
 ```
 
 ## Основные команды моего Telegram bot
